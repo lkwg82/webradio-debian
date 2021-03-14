@@ -11,3 +11,5 @@ else
   echo "adding user '$user'"
   useradd --create-home $user
 fi
+chown -v $user /home/$user/.config
+sed -e 's|^#\(autologin-user\)=.*|\1=pi|' -i /etc/lightdm/lightdm.conf
