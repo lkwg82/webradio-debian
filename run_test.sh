@@ -5,7 +5,6 @@ shopt -s expand_aliases
 
 # build build image
 docker build -t build -f Docker_build .
-docker run --rm -ti -v "$PWD:/out" -w /out build rm -v *deb
 docker run --rm -ti -v "$PWD:/out" -w /out --user "$(id -u)" \
     build \
     dpkg-deb --build /src webradio.deb
@@ -35,3 +34,9 @@ function check_file_in_deb {
 }
 
 check_file_in_deb opt/librespot/librespot-player.jar
+
+vagrant up
+vagrant upload webradio.deb
+vagrant ssh -c 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
+vagrant ssh -c 'sudo dpkg -i webradio.deb'
+vagrant ssh -c 'sudo shutdown -r now'
