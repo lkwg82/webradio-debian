@@ -3,7 +3,7 @@ Version: 0.1-1
 Section: base
 Priority: optional
 Architecture: all
-Depends: default-jre-headless (>= 11), systemd (>= 241), chromium (>= 88), lightdm (>= 1.26), lxde (>= 10)
+Depends: default-jre-headless (>= 11), systemd (>= 241), chromium (>= 88), lightdm (>= 1.26), lxde (>= 10), unclutter (>= 8)
 Maintainer: Lars K.W. Gohlke <lkwg82+webradio@gmail.com>
 Description: Webradio
  A webradio on a pi

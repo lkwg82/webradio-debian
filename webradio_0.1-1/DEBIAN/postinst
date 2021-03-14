@@ -11,5 +11,10 @@ else
   echo "adding user '$user'"
   useradd --create-home $user
 fi
-chown -v $user /home/$user/.config
+
 sed -e 's|^#\(autologin-user\)=.*|\1=pi|' -i /etc/lightdm/lightdm.conf
+chown -v $user /home/$user/.config
+chown -v $user /home/$user/kiosk.sh
+chmod 0755 /home/$user/kiosk.sh
+
+rm -v /etc/xdg/autostart/clipit-startup.desktop || echo "no clipit autostart"
