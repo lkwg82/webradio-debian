@@ -1,0 +1,9 @@
+Package: webradio
+Version: 0.1-1
+Section: base
+Priority: optional
+Architecture: all
+Depends: default-jre-headless (>= 11)
+Maintainer: Lars K.W. Gohlke <lkwg82+webradio@gmail.com>
+Description: Webradio
+ A webradio on a pi
