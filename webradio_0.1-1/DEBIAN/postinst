@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e
+
+systemd-analyze verify spotify.service
+
+user='pi'
+if id $user > /dev/null 2>&1; then
+  echo "user '$user' already exists"
+else
+  echo "adding user '$user'"
+  useradd --create-home $user
+fi

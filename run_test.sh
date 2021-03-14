@@ -3,12 +3,12 @@
 set -euo pipefail
 shopt -s expand_aliases
 
-mkdir -p tmp_empty_context_dir
 # build build image
-docker build -t build -f Docker_build tmp_empty_context_dir
-docker run --rm -ti -v "$PWD:/src" -w /src \
+docker build -t build -f Docker_build .
+docker run --rm -ti -v "$PWD:/out" -w /out build rm -v *deb
+docker run --rm -ti -v "$PWD:/out" -w /out --user "$(id -u)" \
     build \
-    dpkg-deb --build webradio_*
+    dpkg-deb --build /src webradio.deb
 
 # test images
 docker build -t test_debian_10 -f Docker_debian_10 .
@@ -19,6 +19,19 @@ function run_debian_10 {
       "$@"
 }
 
-packages_to_install=$(grep ^Depends: webradio_*/DEBIAN/control | cut -d: -f2 | sed -e 's#(.*)##g')
+run_debian_10 dpkg -i webradio.deb
 
-run_debian_10 dpkg -i webradio_*deb
+dpkg -c webradio*deb
+
+function check_file_in_deb {
+  local pattern=$1
+  echo -n "check ... $pattern "
+  if dpkg -c webradio*deb | grep "$pattern"; then
+    echo "ok"
+  else
+    echo "fail"
+    exit 1
+  fi
+}
+
+check_file_in_deb opt/librespot/librespot-player.jar

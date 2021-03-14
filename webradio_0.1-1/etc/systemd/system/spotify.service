@@ -1,0 +1,13 @@
+[Unit]
+Description=spotify
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi
+Home=/home/pi
+ExecStart=/usr/bin/java -jar /opt/librespot/librespot-player.jar
+#Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target

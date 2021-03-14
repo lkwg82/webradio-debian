@@ -2,6 +2,11 @@ FROM debian:10
 
 RUN apt-get update
 
+# temporary for faster runs
+RUN apt-get install -y --no-install-recommends default-jre-headless
+RUN apt-get install -y --no-install-recommends systemd
+
 COPY webradio_0.1-1/DEBIAN/control /tmp
 
-RUN apt-get install -y $(grep ^Depends: /tmp/control | cut -d: -f2 | sed -e 's#(.*)##g')
+RUN packages=$(grep ^Depends: /tmp/control | cut -d: -f2 | sed -e 's#(.*)##g; s#,##g') \
+    && apt-get install -y --no-install-recommends $packages
