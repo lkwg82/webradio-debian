@@ -17,4 +17,6 @@ chown -v $user /home/$user/.config
 chown -v $user /home/$user/kiosk.sh
 chmod 0755 /home/$user/kiosk.sh
 
-rm -v /etc/xdg/autostart/clipit-startup.desktop || echo "no clipit autostart"
+if [[ -f /etc/xdg/autostart/clipit-startup.desktop ]]; then
+  rm -v /etc/xdg/autostart/clipit-startup.desktop
+fi

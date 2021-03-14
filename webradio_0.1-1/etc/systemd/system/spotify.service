@@ -5,7 +5,7 @@ After=network.target
 [Service]
 WorkingDirectory=/home/pi
 Home=/home/pi
-ExecStart=/usr/bin/java -jar /opt/librespot/librespot-player.jar
+ExecStart=/usr/bin/java -jar /opt/librespot/librespot-api.jar
 #Restart=always
 User=pi
 

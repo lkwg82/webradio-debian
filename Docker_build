@@ -4,11 +4,11 @@ RUN apt-get update
 RUN apt-get install -y curl
 
 ARG LIBRESPOT_VERSION=1.5.5
-ARG LIBRESPOT_URL=https://github.com/librespot-org/librespot-java/releases/download/v$LIBRESPOT_VERSION/librespot-player-$LIBRESPOT_VERSION.jar
+ARG LIBRESPOT_URL=https://github.com/librespot-org/librespot-java/releases/download/v$LIBRESPOT_VERSION/librespot-api-$LIBRESPOT_VERSION.jar
 RUN curl -sL $LIBRESPOT_URL -o /tmp/$(basename $LIBRESPOT_URL)
 
 ADD webradio_0.1-1 /src
 
 WORKDIR /src
 RUN mkdir -p opt/librespot
-RUN cp -v /tmp/libre*jar opt/librespot && cd opt/librespot && ln -s librespot-player-*.jar librespot-player.jar
+RUN cp -v /tmp/libre*jar opt/librespot && cd opt/librespot && ln -s librespot-api-*.jar librespot-api.jar

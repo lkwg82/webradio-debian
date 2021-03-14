@@ -33,7 +33,7 @@ function check_file_in_deb {
   fi
 }
 
-check_file_in_deb opt/librespot/librespot-player.jar
+check_file_in_deb opt/librespot/librespot-api.jar
 
 vagrant up
 vagrant upload webradio.deb
