@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -euo pipefail
-shopt -s expand_aliases
+#shopt -s expand_aliases
 
 # build build image
 docker build -t build -f Docker_build .
-docker run --rm -ti -v "$PWD:/out" -w /out --user "$(id -u)" \
+docker run --rm -i -v "$PWD:/out" -w /out --user "$(id -u)" \
     build \
     dpkg-deb --build /src webradio.deb
 
@@ -13,7 +13,7 @@ docker run --rm -ti -v "$PWD:/out" -w /out --user "$(id -u)" \
 docker build -t test_debian_10 -f Docker_debian_10 .
 
 function run_debian_10 {
-  docker run --rm -ti -v "$PWD:/tmp" -w /tmp \
+  docker run --rm -i -v "$PWD:/tmp" -w /tmp \
       test_debian_10 \
       "$@"
 }
@@ -35,8 +35,19 @@ function check_file_in_deb {
 
 check_file_in_deb opt/librespot/librespot-api.jar
 
+if [[ -n ${CI:-} ]]; then
+  echo "skipping interactive part"
+  exit
+fi
+
 vagrant up
 vagrant upload webradio.deb
 vagrant ssh -c 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
 vagrant ssh -c 'sudo dpkg -i webradio.deb'
-vagrant ssh -c 'sudo shutdown -r now'
+exitCode=$(vagrant ssh -c 'ps aux | grep -v grep | grep -q librespot-api ; echo $?')
+if [[ ${exitCode} == "1" ]]; then
+  echo "ERROR spotify service not running"
+  exit "${exitCode}"
+fi
+#vagrant ssh -c 'sudo shutdown -r now'
+

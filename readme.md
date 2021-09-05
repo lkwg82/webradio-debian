@@ -4,5 +4,5 @@
 - vagrant (https://www.vagrantup.com/downloads)
 
 ```
-./run_tests.sh
+./run_test.sh
 ```

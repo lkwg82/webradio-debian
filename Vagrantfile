@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/buster64"
-#   config.vm.network "public_network"
+
   config.vm.provider :virtualbox do |v|
     v.gui = true
     v.memory = 2048
