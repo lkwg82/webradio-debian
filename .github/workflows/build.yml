@@ -33,4 +33,4 @@ jobs:
         run: vagrant up nogui
 
       - name: ssh into box after boot
-        run: vagrant ssh -c "echo 'hello world!'"
+        run: vagrant ssh nogui -- "echo 'hello world!'"
