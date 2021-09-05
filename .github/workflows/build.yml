@@ -18,13 +18,13 @@ jobs:
       - name: install vagrant (actual installation)
         run: sudo apt-get update && sudo apt-get install vagrant -y
       - uses: actions/checkout@v2
-                - name: Cache Vagrant boxes
-                uses: actions/cache@v2
-                with:
-                  path: ~/.vagrant.d/boxes
-                  key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
-                  restore-keys: |
-                    ${{ runner.os }}-vagrant-
+      - name: Cache Vagrant boxes
+        uses: actions/cache@v2
+        with:
+          path: ~/.vagrant.d/boxes
+          key: ${{ runner.os }}-vagrant-${{ hashFiles('Vagrantfile') }}
+          restore-keys: |
+            ${{ runner.os }}-vagrant-
 
       - name: Show Vagrant version
         run: vagrant --version
