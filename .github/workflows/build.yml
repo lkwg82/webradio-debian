@@ -8,4 +8,4 @@ jobs:
 
     steps:
       - name: run tests
-        run: ./run_tests
+        run: ./run_tests.sh
