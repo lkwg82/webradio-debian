@@ -1,4 +1,4 @@
-name: vagrant-up
+name: build
 
 on: [ push ]
 
