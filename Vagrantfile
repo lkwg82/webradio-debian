@@ -6,12 +6,11 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "nogui" do |nogui|
-    # ok
+    v.gui = false
   end
 
   config.vm.define "withgui" do |withgui|
       config.vm.provider :virtualbox do |v|
-        v.gui = true
         v.customize ["modifyvm", :id, "--vram", "128"]
         v.customize ["modifyvm", :id, "--graphicscontroller","vmsvga"]
       end
