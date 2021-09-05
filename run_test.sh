@@ -35,6 +35,11 @@ function check_file_in_deb {
 
 check_file_in_deb opt/librespot/librespot-api.jar
 
+if [[ -n ${CI} ]]; then
+  echo "skipping interactive part"
+  exit
+fi
+
 vagrant_environment=${VAGRANT_ENVIRONMENT:-withgui}
 
 vagrant up "${vagrant_environment}"
