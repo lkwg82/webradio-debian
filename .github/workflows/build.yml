@@ -8,8 +8,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: test
-        run: uname -a
+      - name: install virtualbox
+        run: apt update && apt install -y virtualbox
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
