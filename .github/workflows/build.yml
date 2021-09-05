@@ -7,11 +7,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
       - name: update cache
         run: sudo apt-get update
       - name: install virtualbox
         run: sudo apt-get install -y virtualbox
+      - name: install vagrant (gpg keys)
+        run: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      - name: install vagrant (add repo)
+        run: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      - name: install vagrant (actual installation)   
+        run: sudo apt-get update && sudo apt-get install vagrant -y
+      - uses: actions/checkout@v2
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
