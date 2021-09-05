@@ -8,7 +8,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: test
+        run: uname -a
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
