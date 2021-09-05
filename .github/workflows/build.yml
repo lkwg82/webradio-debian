@@ -8,8 +8,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: update cache
+        run: sudo apt-get update
       - name: install virtualbox
-        run: apt update && apt install -y virtualbox
+        run: sudo apt-get install -y virtualbox
       - name: Cache Vagrant boxes
         uses: actions/cache@v2
         with:
