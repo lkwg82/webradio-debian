@@ -5,7 +5,7 @@ shopt -s expand_aliases
 
 # build build image
 docker build -t build -f Docker_build .
-docker run --rm -ti -v "$PWD:/out" -w /out --user "$(id -u)" \
+docker run --rm -i -v "$PWD:/out" -w /out --user "$(id -u)" \
     build \
     dpkg-deb --build /src webradio.deb
 
@@ -13,7 +13,7 @@ docker run --rm -ti -v "$PWD:/out" -w /out --user "$(id -u)" \
 docker build -t test_debian_10 -f Docker_debian_10 .
 
 function run_debian_10 {
-  docker run --rm -ti -v "$PWD:/tmp" -w /tmp \
+  docker run --rm -i -v "$PWD:/tmp" -w /tmp \
       test_debian_10 \
       "$@"
 }
@@ -35,6 +35,7 @@ function check_file_in_deb {
 
 check_file_in_deb opt/librespot/librespot-api.jar
 
+exit 0
 if [[ -n ${CI} ]]; then
   echo "skipping interactive part"
   exit
