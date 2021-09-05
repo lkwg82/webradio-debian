@@ -35,10 +35,19 @@ function check_file_in_deb {
 
 check_file_in_deb opt/librespot/librespot-api.jar
 
-if [[ -z ${CI:-} ]]; then
-  vagrant up
-  vagrant upload webradio.deb
-  vagrant ssh -c 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
-  vagrant ssh -c 'sudo dpkg -i webradio.deb'
-  vagrant ssh -c 'sudo shutdown -r now'
+if [[ -n ${CI:-} ]]; then
+  echo "skipping interactive part"
+  exit
 fi
+
+vagrant up
+vagrant upload webradio.deb
+vagrant ssh -c 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
+vagrant ssh -c 'sudo dpkg -i webradio.deb'
+exitCode=$(vagrant ssh -c 'ps aux | grep -v grep | grep -q librespot-api ; echo $?')
+if [[ ${exitCode} == "1" ]]; then
+  echo "ERROR spotify service not running"
+  exit "${exitCode}"
+fi
+#vagrant ssh -c 'sudo shutdown -r now'
+
