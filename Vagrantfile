@@ -6,7 +6,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "nogui" do |nogui|
-    v.gui = false
+      config.vm.provider :virtualbox do |v|
+        v.gui = false
+      end
   end
 
   config.vm.define "withgui" do |withgui|
