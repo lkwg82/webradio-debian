@@ -35,8 +35,10 @@ function check_file_in_deb {
 
 check_file_in_deb opt/librespot/librespot-api.jar
 
-vagrant up
-vagrant upload webradio.deb
-vagrant ssh -c 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
-vagrant ssh -c 'sudo dpkg -i webradio.deb'
-vagrant ssh -c 'sudo shutdown -r now'
+vagrant_environment=${VAGRANT_ENVIRONMENT:-withgui}
+
+vagrant up "${vagrant_environment}"
+vagrant upload webradio.deb "${vagrant_environment}"
+vagrant ssh "${vagrant_environment}" -- 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
+vagrant ssh "${vagrant_environment}" -- 'sudo dpkg -i webradio.deb'
+vagrant ssh "${vagrant_environment}" -- 'sudo shutdown -r now'

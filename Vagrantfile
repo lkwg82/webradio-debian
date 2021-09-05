@@ -1,11 +1,20 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/buster64"
-#   config.vm.network "public_network"
+
   config.vm.provider :virtualbox do |v|
-    v.gui = true
     v.memory = 2048
-#     v.customize ["modifyvm", :id, "--vram", "128"]
-#     v.customize ["modifyvm", :id, "--graphicscontroller","vmsvga"]
+  end
+
+  config.vm.define "nogui" do |nogui|
+    # ok
+  end
+
+  config.vm.define "withgui" do |withgui|
+      config.vm.provider :virtualbox do |v|
+        v.gui = true
+        v.customize ["modifyvm", :id, "--vram", "128"]
+        v.customize ["modifyvm", :id, "--graphicscontroller","vmsvga"]
+      end
   end
 
   # https://gist.github.com/niw/bed28f823b4ebd2c504285ff99c1b2c2
