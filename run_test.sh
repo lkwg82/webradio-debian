@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -euo pipefail
-#shopt -s expand_aliases
 
 # build build image
 docker build -t build -f Docker_build .
@@ -40,14 +39,19 @@ if [[ -n ${CI:-} ]]; then
   exit
 fi
 
+. .test_lib.sh
+
 vagrant up
-vagrant upload webradio.deb
-vagrant ssh -c 'sudo dpkg -i webradio.deb || sudo apt-get install -f -y'
-vagrant ssh -c 'sudo dpkg -i webradio.deb'
-exitCode=$(vagrant ssh -c 'ps aux | grep -v grep | grep -q librespot-api ; echo $?')
-if [[ ${exitCode} == "1" ]]; then
-  echo "ERROR spotify service not running"
-  exit "${exitCode}"
-fi
-#vagrant ssh -c 'sudo shutdown -r now'
+v_upload_install webradio.deb
+
+v_check_spotify_service_running
+v_check_chrome_service_running
+
+v_do_reboot
+sleep_seconds 30
+
+v_check_spotify_service_running
+v_check_chrome_service_running
+
+v_do_poweroff
 
