@@ -6,4 +6,4 @@
 @xset -dpms
 @xset s noblank
 
-@/home/pi/kiosk.sh
+@/home/pi/start_webradio.sh

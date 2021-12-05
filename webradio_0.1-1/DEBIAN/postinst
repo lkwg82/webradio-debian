@@ -10,12 +10,13 @@ if id $user > /dev/null 2>&1; then
 else
   echo "adding user '$user'"
   useradd --create-home $user
+  chown $user /home/$user
 fi
 
 sed -e 's|^#\(autologin-user\)=.*|\1=pi|' -i /etc/lightdm/lightdm.conf
 chown -v $user /home/$user/.config
-chown -v $user /home/$user/kiosk.sh
-chmod 0755 /home/$user/kiosk.sh
+chown -v $user /home/$user/start_webradio.sh
+chmod 0755 /home/$user/start_webradio.sh
 
 if [[ -f /etc/xdg/autostart/clipit-startup.desktop ]]; then
   rm -v /etc/xdg/autostart/clipit-startup.desktop
